@@ -15,13 +15,13 @@ jobs:
       run: |
        curl -LO https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.zip
        tar -xf apache-jmeter-5.6.3.zip
-       shell: bash
+      shell: bash
  
     - name: Descargar plugin XML Formatter
       run: |
         curl -L -o xml-formatter.jar https://jmeter-plugins.org/files/packages/xml-formatter-0.1.jar
         copy xml-formatter.jar apache-jmeter-5.6.3\lib\ext\
-        shell: cmd
+      shell: cmd
  
     - name: Agregar JMeter al PATH
       run: |
