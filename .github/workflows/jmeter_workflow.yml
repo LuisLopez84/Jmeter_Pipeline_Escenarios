@@ -7,7 +7,10 @@ on:
         description: Rama desde donde se ejecutará el workflow pruebas
         required: true
         default: pruebas
-        type: choise
+        type: choice
+  push:
+    branches:
+      - pruebas
  
 jobs:
   run-jmeter-windows:
