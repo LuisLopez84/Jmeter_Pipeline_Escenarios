@@ -1,0 +1,33 @@
+name: Ejecutar JMeter
+ 
+on:
+  workflow_dispatch:  # lo ejecutas manualmente desde la interfaz
+ 
+jobs:
+  run-jmeter:
+    runs-on: ubuntu-latest
+ 
+    steps:
+    - name: Checkout del código
+      uses: actions/checkout@v3
+ 
+    - name: Instalar JMeter
+      run: |
+        sudo apt update
+        sudo apt install -y wget unzip openjdk-17-jdk
+        wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.3.zip
+        unzip apache-jmeter-5.6.3.zip
+        echo "$(pwd)/apache-jmeter-5.5/bin" >> $GITHUB_PATH
+ 
+    - name: Dar permisos al script
+      run: chmod +x ejecutar_jmeter.sh
+ 
+    - name: Ejecutar JMeter con todos los escenarios
+      run: ./ejecutar_jmeter.sh . 1 15
+ 
+    - name: Subir reportes como artefactos
+      uses: actions/upload-artifact@v4
+      with:
+        name: reportes-jmeter
+        path: |
+          Escenario*/Dashboard
