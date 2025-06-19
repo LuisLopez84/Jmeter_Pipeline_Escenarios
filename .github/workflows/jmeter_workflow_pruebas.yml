@@ -1,0 +1,52 @@
+name: Rama pruebas
+ 
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Rama desde donde se ejecutará el workflow pruebas
+        required: true
+        default: pruebas
+        type: choice
+  push:
+    branches:
+      - pruebas
+ 
+jobs:
+  run-jmeter-windows:
+    runs-on: windows-latest
+ 
+    steps:
+    - name: Checkout del repositorio
+      uses: actions/checkout@v3
+ 
+    - name: Descargar y descomprimir JMeter
+      run: |
+       curl -LO https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.zip
+       powershell -Command "Expand-Archive -Path 'apache-jmeter-5.6.3.zip' -DestinationPath ."
+      shell: cmd
+ 
+    - name: Descargar plugin XML Formatter
+      run: |
+        curl -L -o xml-formatter.jar https://jmeter-plugins.org/files/packages/xml-formatter-0.1.jar
+        copy xml-formatter.jar apache-jmeter-5.6.3\lib\ext\
+      shell: cmd
+ 
+    - name: Agregar JMeter al PATH
+      run: |
+        echo "$env:GITHUB_WORKSPACE\apache-jmeter-5.6.3\bin" | Out-File -Append -FilePath $env:GITHUB_PATH
+      shell: pwsh
+ 
+    - name: Verificar versión de JMeter
+      run: jmeter --version
+      shell: cmd
+ 
+    - name: Ejecutar BAT_PRUEBA.bat
+      run: .\BAT_PRUEBA.bat . 1 5
+      shell: cmd
+ 
+    - name: Subir reportes como artefactos
+      uses: actions/upload-artifact@v4
+      with:
+        name: reportes-jmeter-windows
+        path: Escenario*/Dashboard
