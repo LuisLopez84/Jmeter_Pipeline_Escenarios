@@ -1,33 +1,31 @@
-name: Ejecutar JMeter
+name: Ejecutar JMeter en Windows
  
 on:
-  workflow_dispatch:  # lo ejecutas manualmente desde la interfaz
+  workflow_dispatch:  # Permite ejecución manual
  
 jobs:
-  run-jmeter:
-    runs-on: ubuntu-latest
+  run-jmeter-windows:
+    runs-on: windows-latest
  
     steps:
-    - name: Checkout del código
+    - name: Checkout del repositorio
       uses: actions/checkout@v3
  
-    - name: Instalar JMeter
+    - name: Descargar Apache JMeter
       run: |
-        sudo apt update
-        sudo apt install -y wget unzip openjdk-17-jdk
-        wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.3.zip
-        unzip apache-jmeter-5.6.3.zip
-        echo "$(pwd)/apache-jmeter-5.5/bin" >> $GITHUB_PATH
+        curl -LO https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.5.zip
+        tar -xf apache-jmeter-5.5.zip
+        echo "JMETER_HOME=$(pwd)\\apache-jmeter-5.5\\bin" >> $env:GITHUB_ENV
  
-    - name: Dar permisos al script
-      run: chmod +x ejecutar_jmeter.sh
+    - name: Agregar JMeter al PATH
+      run: echo "$env:JMETER_HOME" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
  
-    - name: Ejecutar JMeter con todos los escenarios
-      run: ./ejecutar_jmeter.sh . 1 15
+    - name: Ejecutar BAT_PRUEBA.bat
+      run: .\BAT_PRUEBA.bat . 1 15
+      shell: cmd
  
     - name: Subir reportes como artefactos
       uses: actions/upload-artifact@v4
       with:
-        name: reportes-jmeter
-        path: |
-          Escenario*/Dashboard
+        name: reportes-jmeter-windows
+        path: Escenario*/Dashboard
