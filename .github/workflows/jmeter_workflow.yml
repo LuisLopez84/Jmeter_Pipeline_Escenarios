@@ -1,8 +1,13 @@
-name: Ejecutar JMeter en Windows
+name: Rama pruebas
  
 on:
   workflow_dispatch:
-    branches:[pruebas]
+    inputs:
+      branch:
+        description: Rama desde donde se ejecutará el workflow pruebas
+        required: true
+        default: pruebas
+        type: choise
  
 jobs:
   run-jmeter-windows:
