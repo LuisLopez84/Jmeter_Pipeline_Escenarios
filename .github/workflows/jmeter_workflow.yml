@@ -15,9 +15,9 @@ jobs:
       run: |
        curl -LO https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.zip
        tar -xf apache-jmeter-5.6.3.zip
-       shell: pwsh
+       shell: bash
  
-    - name: Descargar Plugin XML Format Post Processor
+    - name: Descargar plugin XML Formatter
       run: |
         curl -L -o xml-formatter.jar https://jmeter-plugins.org/files/packages/xml-formatter-0.1.jar
         copy xml-formatter.jar apache-jmeter-5.6.3\lib\ext\
@@ -25,11 +25,10 @@ jobs:
  
     - name: Agregar JMeter al PATH
       run: |
-        echo "$PWD\\apache-jmeter-5.6.3\\bin" >> $env:GITHUB_PATH
-        echo "JMETER_HOME=$PWD\\apache-jmeter-5.6.3" >> $env:GITHUB_ENV
+        echo "$env:GITHUB_WORKSPACE\apache-jmeter-5.6.3\bin" | Out-File -Append -FilePath $env:GITHUB_PATH
       shell: pwsh
  
-    - name: Verificar JMeter instalado
+    - name: Verificar versión de JMeter
       run: jmeter --version
       shell: cmd
  
