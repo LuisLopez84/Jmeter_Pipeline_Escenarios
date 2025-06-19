@@ -13,14 +13,25 @@ jobs:
  
     - name: Descargar Apache JMeter 5.6.3
       run: |
-        curl -LO https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.zip
-        tar -xf apache-jmeter-5.6.3.zip
+       curl -LO https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.zip
+       tar -xf apache-jmeter-5.6.3.zip
+       shell: pwsh
+ 
+    - name: Descargar Plugin XML Format Post Processor
+      run: |
+        curl -L -o xml-formatter.jar https://jmeter-plugins.org/files/packages/xml-formatter-0.1.jar
+        copy xml-formatter.jar apache-jmeter-5.6.3\lib\ext\
+        shell: cmd
  
     - name: Agregar JMeter al PATH
       run: |
         echo "$PWD\\apache-jmeter-5.6.3\\bin" >> $env:GITHUB_PATH
         echo "JMETER_HOME=$PWD\\apache-jmeter-5.6.3" >> $env:GITHUB_ENV
       shell: pwsh
+ 
+    - name: Verificar JMeter instalado
+      run: jmeter --version
+      shell: cmd
  
     - name: Ejecutar BAT_PRUEBA.bat
       run: .\BAT_PRUEBA.bat . 1 5
