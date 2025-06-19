@@ -1,7 +1,7 @@
 name: Ejecutar JMeter en Windows
  
 on:
-  workflow_dispatch:  # Permite ejecución manual
+  workflow_dispatch:
  
 jobs:
   run-jmeter-windows:
@@ -11,14 +11,16 @@ jobs:
     - name: Checkout del repositorio
       uses: actions/checkout@v3
  
-    - name: Descargar Apache JMeter
+    - name: Descargar Apache JMeter 5.6.3
       run: |
         curl -LO https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.zip
         tar -xf apache-jmeter-5.6.3.zip
-        echo "JMETER_HOME=$(pwd)\\apache-jmeter-5.5\\bin" >> $env:GITHUB_ENV
  
     - name: Agregar JMeter al PATH
-      run: echo "$env:JMETER_HOME" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+      run: |
+        echo "$PWD\\apache-jmeter-5.6.3\\bin" >> $env:GITHUB_PATH
+        echo "JMETER_HOME=$PWD\\apache-jmeter-5.6.3" >> $env:GITHUB_ENV
+      shell: pwsh
  
     - name: Ejecutar BAT_PRUEBA.bat
       run: .\BAT_PRUEBA.bat . 1 5
