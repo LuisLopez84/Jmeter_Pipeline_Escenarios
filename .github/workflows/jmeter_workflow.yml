@@ -25,8 +25,8 @@ jobs:
  
     - name: Descargar y descomprimir JMeter
       run: |
-        curl -LO https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.zip
-        powershell -Command "Expand-Archive -Path 'apache-jmeter-5.6.3.zip' -DestinationPath ."
+       curl -LO https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.zip
+       powershell -Command "Expand-Archive -Path 'apache-jmeter-5.6.3.zip' -DestinationPath ."
       shell: cmd
  
     - name: Descargar plugin XML Formatter
@@ -49,12 +49,26 @@ jobs:
       shell: cmd
  
     - name: Verificar Secret IP
-      run: Write-Output "La IP es: ${{ secrets.JMETER_SECRET_IP }}"
-      shell: pwsh
+      run: |
+        if defined JMETER_SECRET_IP (
+          echo "El secreto JMETER_SECRET_IP está configurado"
+        ) else (
+          echo "El secreto JMETER_SECRET_IP no está configurado"
+        )
+      shell: cmd
+      env:
+        JMETER_SECRET_IP: ${{ secrets.JMETER_SECRET_IP }}
  
     - name: Verificar Secret Complemento Endpoint
-      run: Write-Output "El complemento es: ${{ secrets.JMETER_SECRET_COMPLEMENTO_ENDPOINT }}"
-      shell: pwsh
+      run: |
+        if defined JMETER_SECRET_COMPLEMENTO_ENDPOINT (
+          echo "El secreto JMETER_SECRET_COMPLEMENTO_ENDPOINT está configurado"
+        ) else (
+          echo "El secreto JMETER_SECRET_COMPLEMENTO_ENDPOINT no está configurado"
+        )
+      shell: cmd
+      env:
+        JMETER_SECRET_COMPLEMENTO_ENDPOINT: ${{ secrets.JMETER_SECRET_COMPLEMENTO_ENDPOINT }}
  
     - name: Subir reportes como artefactos
       uses: actions/upload-artifact@v4
