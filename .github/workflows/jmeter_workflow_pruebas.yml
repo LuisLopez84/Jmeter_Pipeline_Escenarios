@@ -9,7 +9,6 @@ on:
         default: pruebas
         type: choice
         options:
-          - master
           - pruebas
   push:
     branches:
