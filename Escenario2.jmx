@@ -22,9 +22,9 @@
       </ThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Soap Request">
-          <stringProp name="HTTPSampler.domain">${__P(JMETER_SECRET_IP)}</stringProp>
+          <stringProp name="HTTPSampler.domain">${ip}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
-          <stringProp name="HTTPSampler.path">${__P(JMETER_SECRET_COMPLEMENTO_ENDPOINT)}</stringProp>
+          <stringProp name="HTTPSampler.path">${complementoEndpoint}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -55,7 +55,7 @@
               </elementProp>
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">SOAPAction</stringProp>
-                <stringProp name="Header.value">&quot;${__P(JMETER_SECRET_ENPOINT)}&quot;</stringProp>
+                <stringProp name="Header.value">&quot;${endpoint}&quot;</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
