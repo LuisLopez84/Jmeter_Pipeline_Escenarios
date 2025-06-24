@@ -15,6 +15,6 @@ for /L %%a IN (%2, 1, %3) DO (
     -Jip=%4 -JcomplementoEndpoint=%5 -Jendpoint=%6
 )
  
-REM echo Parametro 4 (ip): %4
-REM echo Parametro 5 (complemento): %5
-REM echo Parametro 6 (endpoint): %6
+echo Parametro 4 (ip): %4
+echo Parametro 5 (complemento): %5
+echo Parametro 6 (endpoint): %6
