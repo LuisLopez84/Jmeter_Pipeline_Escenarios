@@ -14,3 +14,6 @@ for /L %%a IN (%2, 1, %3) DO (
     jmeter -n -t %1\Escenario%%a.jmx -l %1\Escenario%%a\Escenario%%a.jtl -e -o %1\Escenario%%a\Dashboard ^
     -JJMETER_SECRET_IP=%4 -JJMETER_SECRET_COMPLEMENTO_ENDPOINT=%5 -JJMETER_SECRET_ENPOINT=%6
 )
+REM echo Parametro 4 (ip): %4
+REM echo Parametro 4 (complemento): %5
+REM echo Parametro 4 (endpoint): %6
