@@ -1,10 +1,9 @@
-name: Rama pruebas
+name: Rama master
  
 on:
   workflow_dispatch:
     inputs:
       branch:
-<<<<<<< HEAD
         description: Rama desde donde se ejecutará el workflow master
         required: true
         default: master
@@ -15,15 +14,6 @@ on:
   push:
     branches:
       - master
-=======
-        description: Rama desde donde se ejecutará el workflow pruebas
-        required: true
-        default: pruebas
-        type: choice
-  push:
-    branches:
-      - pruebas
->>>>>>> dc6041afd7df58cbf6d59870223202c8669e856a
  
 jobs:
   run-jmeter-windows:
