@@ -44,8 +44,8 @@ jobs:
       run: jmeter --version
       shell: cmd
  
-    - name: Ejecutar BAT_PRUEBA.bat
-      run: .\BAT_PRUEBA.bat . 1 5
+    - name: Ejecutar BAT_PRUEBA.bat con parámetros
+      run: .\BAT_PRUEBA.bat . 1 5 ${{ secrets.JMETER_SECRET_IP }} ${{ secrets.JMETER_SECRET_COMPLEMENTO_ENDPOINT }} ${{ secrets.JMETER_SECRET_ENPOINT }}
       shell: cmd
  
     - name: Subir reportes como artefactos
